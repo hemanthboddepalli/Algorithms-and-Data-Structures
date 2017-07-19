@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+// Compress a string
+public class Solution {
+
+    public static void main(String[] args) {
+        String a = "a";
+        StringBuffer sb = new StringBuffer();
+        int count = 1; char prev = a.charAt(0); char ch=a.charAt(0);
+        for(int i=1; i< a.length();i++){
+            ch = a.charAt(i);
+            if(ch==prev){
+                count = count + 1;
+            }
+            else{
+                sb.append(prev);
+                sb.append(count);
+                count = 1;
+                prev = ch;
+            }
+        }
+        sb.append(ch);
+        sb.append(count);
+        String res = sb.toString();
+        if(res.length() > a.length()){
+            System.out.println(a);
+        }
+        else{
+            System.out.println(res);
+        }
+    }
+}
