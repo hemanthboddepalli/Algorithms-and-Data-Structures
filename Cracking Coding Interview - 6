@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+// If an element in MxN matrix is zero, then make its entire row and column to zero
+public class Solution {
+
+    public static void main(String[] args) {
+        int n = 4;
+        int[][] a = new int[n][n];
+        int count = 0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                a[i][j] = count++;
+            }
+        }
+        makeZeros(a);
+    }
+
+    public static void makeZeros(int[][] arr){
+        int rows = arr.length;
+        int cols = arr[0].length;
+
+        boolean[] row = new boolean[rows];
+        boolean[] col = new boolean[cols];
+
+        for(int i=0; i< rows; i++){
+            for(int j=0; j< cols; j++){
+                if(arr[i][j]==0){
+                    row[i] = true;
+                    col[i] = true;
+                }
+            }
+        }
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(row[i] || col[j]){
+                    arr[i][j] = 0;
+                }
+            }
+        }
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println("");
+        }
+    }
+}
