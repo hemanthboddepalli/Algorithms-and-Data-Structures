@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+// Single Linked List Implementation in Java - Cracking coding Interview.
+class Node{
+    int data;
+    Node next=null;
+    public Node(int d){
+        this.data = d;
+    }
+
+    public void appendToTail(int d){
+        Node newNode = new Node(d);
+        Node head = this;
+        while(head.next!=null){
+            head = head.next;
+        }
+        head.next = newNode;
+    }
+    public void iterate(){
+        Node head = this;
+        while(head!=null){
+            System.out.print(head.data+"-->");
+            head = head.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public Node delete(int d){
+        Node head = this;
+
+        if(head.data == d){
+            return head.next;
+        }
+
+        Node prev = head;
+        head = head.next;
+        while(head!=null){
+            if(head.data == d){
+                break;
+            }
+            prev = head;
+            head = head.next;
+        }
+        if(head!=null){
+            prev.next = head.next;
+        }
+        return this;
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Node head = new Node(1);
+        head.appendToTail(2);
+        head.appendToTail(3);
+        head.appendToTail(5);
+        head.iterate();
+        head = head.delete(3);
+        head.iterate();
+    }
+}
