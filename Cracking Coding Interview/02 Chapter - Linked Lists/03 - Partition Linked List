@@ -1,0 +1,80 @@
+package specialproject;
+
+//Partition Linked List - Cracking coding Interview.
+class Node{
+    int data;
+    Node next=null;
+    public Node(int d){
+        this.data = d;
+    }
+
+    public void appendToTail(int d){
+        Node newNode = new Node(d);
+        Node head = this;
+        while(head.next!=null){
+            head = head.next;
+        }
+        head.next = newNode;
+    }
+    public void iterate(Node n){
+        Node head = n;
+        while(head!=null){
+            System.out.print(head.data+"-->");
+            head = head.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public Node partitionLinkedList(Node head, int number){
+    	Node firstHead = null;
+    	Node firstTail = null;
+    	Node secondHead = null;
+    	Node secondTail = null;
+    	while(head!=null){
+    		if(head.data < number){
+    			if(firstHead==null){
+    				firstHead = new Node(head.data);
+    				firstTail = firstHead;
+    			}
+    			else{
+    				firstTail.next = new Node(head.data);
+    				firstTail = firstTail.next;
+    			}
+    		}
+    		else{
+    			if(secondHead==null){
+    				secondHead = new Node(head.data);
+    				secondTail = secondHead;
+    			}
+    			else{
+    				secondTail.next = new Node(head.data);
+    				secondTail = secondTail.next;
+    			}
+    		}
+    		head = head.next;
+    	}
+    	if(firstTail!=null){
+    		firstTail.next = secondHead;
+    	}
+    	else if(secondTail!=null){
+    		return secondHead;
+    	}
+    	return firstHead;
+    }
+}
+
+//Partition Linked List
+public class Solution {
+
+    public static void main(String[] args) {
+        Node head = new Node(0);
+        head.appendToTail(1);
+        head.appendToTail(5);
+        head.appendToTail(9);
+        head.appendToTail(3);
+        head.appendToTail(2);
+        head.iterate(head);
+        Node res = head.partitionLinkedList(head,3);
+        head.iterate(res);
+    }
+}
