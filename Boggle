@@ -1,0 +1,101 @@
+
+
+//Boggle
+//Given an NxN grid of characters and a dictionary, find all words which can be made from the characters in grid and present in the given dictionary. A word can start and end at any character in the grid. Next character must be adjacent to previous character in any of the directions i.e. up, down, left, right and diagonal. Character at each position in grid can be used only once while making a word.
+//
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+class Node{
+    int x,y;
+    public Node(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class ListNode{
+    ListNode next = null;
+    int val;
+    public ListNode(int val){
+        this.val = val;
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+ class Interval {
+    int start;
+    int end;
+    Interval() { start = 0; end = 0; }
+    Interval(int s, int e) { start = s; end = e; }
+ }
+
+public class Solution {
+    public static void main(String[] args) {
+        int m = 3, n = 3;
+        char[][] matrix = new char[m][n];
+        matrix[0][0] = 'C'; matrix[0][1] = 'A'; matrix[0][2] = 'T';
+        matrix[1][0] = 'A'; matrix[1][1] = 'R'; matrix[1][2] = 'E';
+        matrix[2][0] = 'R'; matrix[2][1] = 'O'; matrix[2][2] = 'N';
+        
+        String str = "CAX";
+        new Solution().boggle(matrix,m,n,str);
+    }
+    
+    public void boggle(char[][] matrix, int m, int n, String str){
+        ArrayList<Node> points = new ArrayList<Node>();
+        points.add(new Node(0,0));
+        
+        boolean res = findWord(matrix,points, m, n , str,1);
+        
+        System.out.println(res);
+    }
+    
+    public boolean findWord(char[][] matrix, ArrayList<Node> points, int m, int n, String str, int index){
+        if(index >= str.length()){
+            return true;
+        }
+        
+        boolean res = false;
+        
+        for(int i=0; i<points.size();i++){
+            ArrayList<Node> poss = getPossibilities(points.get(i), m, n, str.charAt(index), matrix);
+            if(poss.size()==0){
+                continue;
+            }
+            else{
+                res = findWord(matrix, poss, m, n , str, index+1);
+            }
+            
+        }
+        return res;
+    }
+    
+    public ArrayList<Node> getPossibilities(Node node, int m, int n, char c, char[][] matrix){
+        int[] dx = {1,0,-1,0,-1,1,1,-1};
+        int[] dy = {0,1,0,-1,1,-1,1,-1};
+        ArrayList<Node> list = new ArrayList<Node>();
+        for(int i=0; i<8;i++){
+            int x = dx[i] + node.x;
+            int y = dy[i] + node.y;
+            if(x >=0 && x < m && y >=0 && y < n){
+                if(matrix[x][y]==c){
+                    System.out.println("x: "+x+" y: "+y);
+                    list.add(new Node(x,y));
+                }
+            }
+        }
+        return list;
+    }   
+}
