@@ -1,0 +1,130 @@
+
+
+//Print Tree Perimeter
+//Given the root node of a binary tree, print nodes forming the boundary (perimeter).
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+class Node{
+    int x,y;
+    public Node(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class ListNode{
+    ListNode next = null;
+    int val;
+    public ListNode(int val){
+        this.val = val;
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+ class Interval {
+    int start;
+    int end;
+    Interval() { start = 0; end = 0; }
+    Interval(int s, int e) { start = s; end = e; }
+ }
+
+public class Solution {
+    public static void main(String[] args) {
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        al.add(1);al.add(2);al.add(3);al.add(4);al.add(5);
+        al.add(6);al.add(7);al.add(8);al.add(9);al.add(10);
+        al.add(11);al.add(12);al.add(13);al.add(14);al.add(15);
+        ArrayList<Integer> res = postorderTraversal(buildTree(al));
+        System.out.println(res);
+        
+    }
+    
+    public static ArrayList<Integer> postorderTraversal(TreeNode a) {
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        Stack<TreeNode> rightStack = new Stack<TreeNode>();
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        TreeNode root = a;
+        st.push(root);
+        rightStack.push(root);
+        while(root.left!=null){
+            res.add(root.val);
+            root = root.left;
+            st.push(root);
+        }
+        while(!st.isEmpty()){
+            root = st.peek();
+            if(root.right!=null){
+                
+                root = root.right;
+                if(rightStack.peek().right == root){
+                    rightStack.push(root);
+                }
+                
+                st.push(root);
+                while(root.left!=null){
+                    root = root.left;
+                    st.push(root);
+                }
+            }
+            else{
+                st.pop();
+                if(root.left==null && root.right==null){
+                    res.add(root.val);
+                }
+                while(!st.isEmpty() && st.peek().right==root){
+                    root = st.pop();
+                }
+            }
+        }
+        res.remove(res.size()-1);
+        while(!rightStack.isEmpty()){
+            res.add(rightStack.pop().val);
+        }
+        res.remove(res.size()-1);
+        return res;
+    }
+    
+    public static TreeNode buildTree(ArrayList<Integer> al){
+        TreeNode root = null;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        for(int i=0;i<al.size();i++){
+            
+            if(root==null){
+                root = new TreeNode(al.get(i));
+                queue.add(root);
+                continue;
+            }
+            
+            TreeNode temp = queue.peek();
+            if(temp.left==null){
+                TreeNode node = new TreeNode(al.get(i));
+                temp.left = node;
+                queue.add(node);
+            }
+            else if(temp.right==null){
+                TreeNode node = new TreeNode(al.get(i));
+                temp.right = node;
+                queue.add(node);
+            }
+            
+            if(temp.left!=null && temp.right!=null){
+                queue.remove();
+            }
+            
+        }
+        return root;
+    }
+    
+}
