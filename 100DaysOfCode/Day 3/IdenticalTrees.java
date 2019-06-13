@@ -1,3 +1,5 @@
+//Used preorder traversal iterative approach.
+
 class IdenticalTrees{
   public static boolean are_identical(BinaryTreeNode root1, BinaryTreeNode root2) {
     if (root1 == null && root2 == null) return true;
