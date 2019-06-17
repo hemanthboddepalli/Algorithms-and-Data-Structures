@@ -24,15 +24,20 @@ public class FindSecondLargest {
         Queue<TreeNode<Integer>> queue = new LinkedList<TreeNode<Integer>>();
         queue.add(root); TreeNode<Integer> one = null, two = null;
         int max = Integer.MIN_VALUE;
-		while (!queue.isEmpty()) {
+	while (!queue.isEmpty()) {
             int size = queue.size();
             while (size != 0) {
                 TreeNode<Integer> node = queue.remove();
-                if (node.data > max) {
+                if (node.data > onemax) {
                     // copy one into two
                     two = one;
+                    twomax = onemax;                    
                     one = node;
-                    max = node.data;
+                    onemax = node.data;
+                }
+                else if (node.data > twomax && node.data != onemax) {
+                    two = node;
+                    twomax = node.data; 
                 }
                 for (TreeNode<Integer> child : node.children) {
                     queue.add(child);
