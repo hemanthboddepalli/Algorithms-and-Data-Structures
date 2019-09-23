@@ -1,10 +1,9 @@
-
-
 //Boggle
-//Given an NxN grid of characters and a dictionary, find all words which can be made from the characters in grid and present in the given dictionary. A word can start and end at any character in the grid. Next character must be adjacent to previous character in any of the directions i.e. up, down, left, right and diagonal. Character at each position in grid can be used only once while making a word.
+//Given an NxN grid of characters and a dictionary, find all words which can be made from the characters in grid 
+//and present in the given dictionary. A word can start and end at any character in the grid. 
+//Next character must be adjacent to previous character in any of the directions i.e. up, down, left, right and diagonal. 
+//Character at each position in grid can be used only once while making a word.
 //
-
-
 import java.io.*;
 import java.util.*;
 import java.text.*;
